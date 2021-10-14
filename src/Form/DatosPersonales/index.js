@@ -1,0 +1,45 @@
+import React from "react";
+import { TextField, Button, Box } from "@mui/material";
+
+const DatosPersonales = () => {
+  return (
+    <Box
+      component="form"
+      autocomplete="off"
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        paddingTop: "5rem",
+      }}
+    >
+      <TextField
+        label="Nombre"
+        variant="outlined"
+        fullWidth
+        margin="dense"
+        type="text"
+      />
+      <TextField
+        label="Apellidos"
+        variant="outlined"
+        fullWidth
+        margin="dense"
+        type="text"
+      />
+      <TextField
+        label="Número telefónico"
+        variant="outlined"
+        fullWidth
+        margin="dense"
+        type="number"
+      />
+      <Button variant="contained" type="submit">
+        Siguiente
+      </Button>
+    </Box>
+  );
+};
+
+export default DatosPersonales;
