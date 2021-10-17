@@ -11,7 +11,6 @@ const DatosPersonales = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        paddingTop: "5rem",
       }}
     >
       <TextField
@@ -34,6 +33,7 @@ const DatosPersonales = () => {
         fullWidth
         margin="dense"
         type="number"
+        inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
       />
       <Button variant="contained" type="submit">
         Siguiente

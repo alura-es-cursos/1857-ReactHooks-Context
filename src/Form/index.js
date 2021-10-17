@@ -4,7 +4,8 @@ import { LogoSpace, MainSpace, FormSpace, Img } from "./styles";
 import DatosUsuario from "./DatosUsuario";
 import DatosPersonales from "./DatosPersonales";
 import DatosEntrega from "./DatosEntrega";
-import { flexbox } from "@mui/system";
+import Complete from "./Complete";
+import Stepper from "../Stepper";
 
 const Form = () => {
   return (
@@ -16,7 +17,7 @@ const Form = () => {
       }}
     >
       <LogoSpace>
-        <Img src={`${process.env.PUBLIC_URL + "/favicon.png"}`} />{" "}
+        <Img src={"/favicon.png"} />
         <Typography variant="h3">AluraFood</Typography>
       </LogoSpace>
       <FormSpace>

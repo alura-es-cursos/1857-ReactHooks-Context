@@ -11,7 +11,6 @@ const DatosEntrega = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        paddingTop: "5rem",
       }}
     >
       <TextField
@@ -22,7 +21,7 @@ const DatosEntrega = () => {
         type="text"
       />
       <TextField
-        label="Estado/Provincia"
+        label="Ciudad"
         variant="outlined"
         fullWidth
         margin="dense"
