@@ -10,33 +10,36 @@ import Step from "./Step";
 
 //Validaciones
 import { validarEmail, validarPassword } from "./DatosUsuario/validaciones";
+import {
+  validarNombre,
+  validarApellidos,
+  validarTelefono,
+} from "./DatosPersonales/validaciones";
+import { validarInput } from "./DatosEntrega/validaciones";
 
 const Form = () => {
   const [step, setStep] = useState(0);
   const [pasos, setPasos] = useState({});
 
-  const onSubmit = (e) => {
+  const onSubmit = (e, step, pasos) => {
+    console.log(step);
     e.preventDefault();
     let newStep = step + 1;
+    console.log(newStep);
     setStep(newStep);
-    console.log("newStep", newStep);
-    console.log(step);
+    if (newStep === 3) {
+      console.log("Eviar datos al backend", pasos);
+    }
   };
 
-  const handleChange = (element, position, currentStep, validator) => {
+  const handleChange = (element, position, currentStep, validator, pasos) => {
     const value = element.target.value;
     const valid = validator(value);
-    console.log(value);
-    console.log(valid);
-    console.log("currentStep", currentStep);
-    console.log("position", position);
-    console.log("validator", validator);
+    const cp = { ...pasos };
+    cp[currentStep].inputs[position].value = value;
+    cp[currentStep].inputs[position].valid = valid;
 
-    pasos[0].inputs[0].label = "Nombre";
-
-    setPasos(pasos);
-
-    console.log(pasos);
+    setPasos(cp);
   };
 
   const stepsFlow = {
@@ -48,7 +51,7 @@ const Form = () => {
           value: "",
           valid: null,
           onChange: handleChange,
-          helperTex: "Ingresa un correo electrónico válido.",
+          helperText: "Ingresa un correo electrónico válido.",
           validator: validarEmail,
         },
         {
@@ -57,7 +60,17 @@ const Form = () => {
           value: "",
           valid: null,
           onChange: handleChange,
-          helperTex:
+          helperText:
+            "Ingresa una contraseña válida, Al menos 8 caracteres y máximo 20.",
+          validator: validarPassword,
+        },
+        {
+          label: "Cuenta de github",
+          type: "text",
+          value: "",
+          valid: null,
+          onChange: handleChange,
+          helperText:
             "Ingresa una contraseña válida, Al menos 8 caracteres y máximo 20.",
           validator: validarPassword,
         },
@@ -68,42 +81,74 @@ const Form = () => {
     1: {
       inputs: [
         {
-          label: "Correo electrónico",
-          type: "email",
+          label: "Nombre",
+          type: "text",
           value: "",
           valid: null,
           onChange: handleChange,
-          helperTex: "Ingresa un correo electrónico válido.",
-          validator: validarEmail,
+          helperText: "Ingresa al menos 2 caracteres y máximo 30 caracteres.",
+          validator: validarNombre,
         },
         {
-          label: "Contraseña",
-          type: "password",
+          label: "Apellidos",
+          type: "text",
           value: "",
           valid: null,
           onChange: handleChange,
-          helperTex:
-            "Ingresa una contraseña válida, Al menos 8 caracteres y máximo 20.",
-          validator: validarPassword,
+          helperText: "Ingresa al menos 2 caracteres y máximo 50 caracteres.",
+          validator: validarApellidos,
+        },
+        {
+          label: "Número telefonico",
+          type: "number",
+          value: "",
+          valid: null,
+          onChange: handleChange,
+          helperText: "Ingresa al menos 8 digitos y máximo 14 digitos.",
+          validator: validarTelefono,
         },
       ],
       buttonText: "Siguiente",
       onSubmit,
     },
+    2: {
+      inputs: [
+        {
+          label: "Direccion",
+          type: "text",
+          value: "",
+          valid: null,
+          onChange: handleChange,
+          helperText: "Ingresa al menos 4 caracteres.",
+          validator: validarInput,
+        },
+        {
+          label: "Ciudad",
+          type: "text",
+          value: "",
+          valid: null,
+          onChange: handleChange,
+          helperText: "Ingresa al menos 4 caracteres.",
+          validator: validarInput,
+        },
+        {
+          label: "Estado/Provincia",
+          type: "text",
+          value: "",
+          valid: null,
+          onChange: handleChange,
+          helperText: "Ingresa al menos 4 caracteres.",
+          validator: validarInput,
+        },
+      ],
+      buttonText: "Crear cuenta",
+      onSubmit,
+    },
   };
 
   useEffect(() => {
-    console.log("UseEffect");
     setPasos(stepsFlow);
   }, []);
-
-  useEffect(() => {
-    console.log(pasos);
-  }, [pasos]);
-
-  useEffect(() => {
-    console.log("Se ha actualizado el step: ", step);
-  }, [step]);
 
   // useEffect(async () => {
   //   try {
@@ -121,7 +166,6 @@ const Form = () => {
   //step = 3 --> <Complete />
 
   const updateStep = (step) => {
-    console.log("actualizar paso", step);
     setStep(step);
   };
 
@@ -131,8 +175,6 @@ const Form = () => {
     2: <DatosEntrega updateStep={updateStep} />,
     3: <Complete />,
   };
-
-  console.log("FORM COMPONENT");
 
   return (
     <Box
@@ -149,7 +191,10 @@ const Form = () => {
       <FormSpace>
         {step < 3 && <Stepper step={step} />}
         {/* {steps[step]} */}
-        <Step data={pasos[step]} step={step} />
+        {step < 3 && pasos[step] && (
+          <Step data={pasos[step]} step={step} pasos={pasos} />
+        )}
+        {step === 3 && <Complete />}
       </FormSpace>
     </Box>
   );
