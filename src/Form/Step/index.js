@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { TextField, Button, Box } from "@mui/material";
+import { CounterContext } from "../../Context";
 
 const Step = ({ data, step, pasos }) => {
   const { inputs, buttonText, onSubmit } = data;
+
+  const counterData = useContext(CounterContext);
+
+  console.log(counterData);
 
   return (
     <Box
@@ -16,6 +21,9 @@ const Step = ({ data, step, pasos }) => {
       }}
       onSubmit={(e) => onSubmit(e, step, pasos)}
     >
+      <strong>
+        El valor del contador es: {counterData.count} - {counterData.user.jwt}
+      </strong>
       {inputs.map((input, i) => {
         const { label, type, value, valid, onChange, helperText, validator } =
           input;
