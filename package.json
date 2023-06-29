@@ -10,14 +10,17 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "audit": "^0.0.6",
+    "fix": "^0.0.3",
+    "npm": "^9.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.1",
     "styled-components": "^5.3.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "PORT=3005 react-scripts start ",
+    "start": "react-scripts start ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
